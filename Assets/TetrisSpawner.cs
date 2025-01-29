@@ -1,31 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TetrisSpawner : MonoBehaviour
 {
-    public GameObject[] tetrominoPrefabs; // Array of Tetromino prefabs
-    private TetrisGrid grid; // Reference to the TetrisGrid
+    //public List<GameObject> tetrominoes;
+    public GameObject[] tetrominoPrefabs;
+    private TetrisGrid grid;
     private GameObject nextPiece;
 
+    // Start is called before the first frame update
     void Start()
     {
-        grid = FindObjectOfType<TetrisGrid>(); // Find the grid instance in the scene
+        grid = FindObjectOfType<TetrisGrid>();
         if (grid == null)
         {
-            Debug.LogError("TetrisGrid not found in the scene. Ensure a TetrisGrid object exists.");
+            Debug.LogError("NO GRID!");
             return;
         }
 
-        SpawnPiece(); // Initial spawn
+        //spawn initial piece here
+        SpawnPiece();
     }
 
     public void SpawnPiece()
     {
-        // Calculate the top-center spawn position based on grid dimensions
+        //calculate the center of the grid based on dimensions
         Vector3 spawnPosition = new Vector3(
-            Mathf.Floor(grid.width / 2f), // Horizontal center of the grid
-            grid.height - 1,             // Top row of the grid
-            0                            // Z position for 2D
-        );
+            Mathf.Floor(grid.width / 2), //x
+            grid.height,             //y 
+            0);                          //z
 
         if (nextPiece != null)
         {
@@ -34,13 +38,15 @@ public class TetrisSpawner : MonoBehaviour
         }
         else
         {
+            //spawn random piece
             nextPiece = InstantiateRandomPiece();
             nextPiece.transform.position = spawnPosition;
         }
 
-        // Prepare the next piece for preview
+        //prepare next piece
+        //spawn next piece here
         nextPiece = InstantiateRandomPiece();
-        nextPiece.SetActive(false); // Deactivate until it's the active piece
+        nextPiece.SetActive(false); //deactivate until its time to use it
     }
 
     private GameObject InstantiateRandomPiece()

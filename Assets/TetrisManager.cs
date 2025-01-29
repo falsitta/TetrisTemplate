@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TetrisManager
+public class TetrisManager : MonoBehaviour
 {
     public int score = 0;
 
